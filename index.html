@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+      }
+
+      canvas {
+        border: solid 1px black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="630" height="300"></canvas>
+
+    <script>
+
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      var canvasWidth = 630;
+      var canvasHeight = 300;
+
+      //coordenadas iniciais do circulo
+      var xCir = 40;
+      var yCir = 300;
+      var dxCir = 2;
+      var dyCir = 2;
+      var raioCir = 20;
+
+      var xBase = 270;
+      var yBase = 290;
+      var baseWidth = 90;
+      var baseHeight = 10;
+
+      var gamma = 0;
+      var prevGamma = gamma;
+      var pas = true;
+
+      var step = canvasWidth / 90;
+
+      window.addEventListener('deviceorientation', deviceOrientationHandler);
+
+      function deviceOrientationHandler(eventData){
+        gamma = eventData.gamma;
+        movimentaBase(); 
+      }
+
+      function desenhaBola() {
+        ctx.beginPath();
+        ctx.arc(xCir, yCir, raioCir, 0, Math.PI * 2);
+        ctx.fillStyle = "#fff";
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function desenhaBase() {
+        ctx.beginPath();
+        ctx.rect(xBase, yBase, baseWidth, baseHeight);
+        ctx.fillStyle = "#00baff";
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function desenha() {
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight); //limpa o canvas
+        desenhaBola();
+        desenhaBase();
+        //movimentaBase();
+        //novas posicoes
+        xCir = xCir + dxCir;
+        yCir = yCir - dyCir;
+      }
+
+      setInterval(desenha, 10);
+
+      var center = (canvasWidth / 2) - (baseWidth / 2);
+      console.log(center);
+
+      function movimentaBase() {
+        if(gamma == 0){
+          xBase = center;
+        }
+        if(xBase + baseWidth < canvasWidth && xBase > 0){
+          if(pas){
+            prevGamma = gamma;
+            pas = false;
+            xBase = gamma * 3;
+            console.log(prevGamma);
+            console.log(gamma);
+            console.log(pas);
+          } else{
+            pas = true;
+            console.log(prevGamma);
+            console.log(gamma);
+            console.log(pas);
+          }
+        }
+      }
+
+      
+    </script>
+  </body>
+</html>
