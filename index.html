@@ -80,9 +80,10 @@
       setInterval(desenha, 10);
 
       var center = (canvasWidth / 2) - (baseWidth / 2);
-      console.log(center);
+      /*console.log(center);*/
 
       function movimentaBase() {
+        /*console.log(gamma.toFixed(2));
         if(gamma == 0){
           xBase = center;
         }
@@ -91,15 +92,17 @@
             prevGamma = gamma;
             pas = false;
             xBase = gamma * 3;
-            console.log(prevGamma);
-            console.log(gamma);
-            console.log(pas);
+            
           } else{
             pas = true;
-            console.log(prevGamma);
-            console.log(gamma);
-            console.log(pas);
+            
           }
+        }*/
+        xBase = center + (gamma.toFixed(0) * 3);
+        console.log(xBase);
+        console.log(gamma.toFixed(2));
+        if(gamma == 90){
+          xBase = canvasWidth - baseWidth;
         }
       }
 
